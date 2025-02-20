@@ -42,13 +42,28 @@ class Car{
 			return availabilityStatus;
 		}
 		
+		double applyDiscount(int rentalDays){
+			double discount = 0.0;
+			if(rentalDays > 10){
+				discount = 0.10;
+			}else if (rentalDays>5){
+				discount = 0.05;
+			}
+			return price - (discount * price);
+		}
+		
 		void rentACar(string name){
 			if (checkAvailabilityStatus()==true){
-				cout<< "CAR IS AVAILABLE"<<endl;
+				cout<< "CAR IS AVAILABLE AND RENTED TO "<< name <<endl;
+				availabilityStatus=false;
 			}else{
-				cout<< "CAR IS RENTED"<<endl;
+				cout<< "CAR IS ALREADY RENTED"<<endl;
 			}
 		}
+		
+		 void displayCarDetails() {
+        cout << "Brand: " << brand << ", Model: " << model << ", Price: $" << price << ", Available: " << (availabilityStatus ? "Yes" : "No") << endl;
+    }
 		
 		
 };
@@ -56,9 +71,14 @@ class Car{
 int main(){
 	
 	Car c("Bugatti","Chiron",10000,false);
+	c.displayCarDetails();
 	c.rentACar("haseem");
-	c.setAvailability(false);
-	c.rentACar("muzammil");
 	c.setAvailability(true);
+	c.displayCarDetails();
 	c.rentACar("ALI");
+	c.setPrice(c.applyDiscount(15));
+	c.displayCarDetails();
+	c.setAvailability(false);
+	c.displayCarDetails();
+	c.rentACar("muzammil");
 }
