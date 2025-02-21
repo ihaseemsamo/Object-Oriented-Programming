@@ -11,14 +11,7 @@ class Car{
 	string carID;
 	
 	public:
-		Car (string b, string m,double p,bool a, string CarID){
-			brand=b;
-			model=m;
-			price=p;
-			availabilityStatus=a;
-			totalRevenue=0.0;
-			carID=CarID;
-		}
+		Car (string b, string m,double p,bool a, string CarID) :brand(b),model(m),price(p),availabilityStatus(a),totalRevenue(0.0),carID(CarID){}
 		
 		bool checkAvailability(){
 			return availabilityStatus;
