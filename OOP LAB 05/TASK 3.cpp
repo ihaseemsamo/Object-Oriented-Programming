@@ -1,28 +1,92 @@
-#include<iostream>
-
+#include <iostream>
+#include <string>
 using namespace std;
 
-class Employee{
-	public: 
-	string empName;
-	int empID;
+class Person {
+	protected:
+	    string name;
+	    int age;
 	
-	Employee(string name,int ID): empName(name), empID(ID){}
+	public:
+	    Person(string pName, int pAge) {
+	        name = pName;
+	        age = pAge;
+	    }
 	
-	void display() const{
-	cout<<"Employee ID: "<< empID << endl<< "Employee Name " << empName << endl; 
-	} 
+	    void displayDetails() {
+	        cout << "Name: " << name << endl;
+	        cout << "Age: " << age << endl;
+	    }
 };
 
-class Project{
-	private: 
-	string ProjectName;
-	Employee *employee[10];
-	int emp;
+class Teacher : virtual public Person {
+	protected:
+	    string subject;
 	
-	Employee(string name,int ID): empName(name), empID(ID){}
+	public:
+	    Teacher(string pName, int pAge, string tSubject)
+	        : Person(pName, pAge) {
+	        subject = tSubject;
+	    }
 	
-	void display() const{
-	cout<<"Employee ID: "<< empID << endl<< "Employee Name " << empName << endl; 
-	} 
+	    void displayDetails() {
+	        cout << "Subject: " << subject << endl;
+	    }
 };
+
+class Researcher : virtual public Person {
+	protected:
+	    string researchArea;
+	
+	public:
+	    Researcher(string pName, int pAge, string rArea)
+	        : Person(pName, pAge) {
+	        researchArea = rArea;
+	    }
+	
+	    void displayDetails() {
+	        cout << "Research Area: " << researchArea << endl;
+	    }
+};
+
+class Professor : public Teacher, public Researcher {
+	private:
+	int publications;
+	
+	public:
+	Professor(string pName, int pAge, string tSubject, string rArea, int pPublications)
+	    : Person(pName, pAge), Teacher(pName, pAge, tSubject), Researcher(pName, pAge, rArea) {
+	    publications = pPublications;
+	}
+	
+	void displayDetails() {
+	    Person::displayDetails();
+	    Teacher::displayDetails();
+	    Researcher::displayDetails();
+	    cout << "Publications: " << publications << endl;
+	}
+};
+
+int main() {
+    string name, subject, researchArea;
+    int age, publications;
+
+    cout << "Enter professor's name: ";
+    getline(cin, name);
+    cout << "Enter professor's age: ";
+    cin >> age;
+    cin.ignore();
+    cout << "Enter subject expertise: ";
+    getline(cin, subject);
+    cout << "Enter research area: ";
+    getline(cin, researchArea);
+    cout << "Enter number of publications: ";
+    cin >> publications;
+
+    Professor prof(name, age, subject, researchArea, publications);
+
+    cout << "\nProfessor Details:\n";
+    prof.displayDetails();
+
+    return 0;
+}
